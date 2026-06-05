@@ -26,8 +26,11 @@ api.interceptors.response.use(
     console.error('[API Response Error]', error.config?.url, error.response?.status, error.response?.data);
     
     if (error.response?.status === 401) {
-      localStorage.clear();
-      window.location.href = '/';
+      const isLoginPage = window.location.pathname === '/' || window.location.pathname === '/login';
+      if (!isLoginPage) {
+        localStorage.clear();
+        window.location.href = '/';
+      }
     }
     return Promise.reject(error);
   }
