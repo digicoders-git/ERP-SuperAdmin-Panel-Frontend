@@ -24,13 +24,10 @@ api.interceptors.response.use(
   (error) => {
     // Log error responses for debugging
     console.error('[API Response Error]', error.config?.url, error.response?.status, error.response?.data);
-    
+
     if (error.response?.status === 401) {
-      const isLoginPage = window.location.pathname === '/' || window.location.pathname === '/login';
-      if (!isLoginPage) {
-        localStorage.clear();
-        window.location.href = '/';
-      }
+      localStorage.clear();
+      window.location.href = '/';
     }
     return Promise.reject(error);
   }
